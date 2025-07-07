@@ -1,0 +1,51 @@
+#include <iostream>
+#include <string>
+#include <vector>
+
+using namespace std;
+
+int main() {
+    string secretWord = "mango"; 
+    string guessedWord(secretWord.length(), '_');
+    vector<char> wrongGuesses;
+    int maxAttempts = 6;
+    int attempts = 0;
+    char guess;
+
+    cout << "Guess the Word Game" << endl;
+    cout << "Hint: It's a fruit" << endl;
+
+    while (guessedWord != secretWord && attempts < maxAttempts) {
+        cout << "\nWord: " << guessedWord << endl;
+        cout << "Wrong guesses: ";
+        for (char c : wrongGuesses) cout << c << " ";
+        cout << "\nYou have " << (maxAttempts - attempts) << " tries left." << endl;
+
+        cout << "Enter a letter: ";
+        cin >> guess;
+
+        bool found = false;
+        for (size_t i = 0; i < secretWord.length(); i++) {
+            if (tolower(secretWord[i]) == tolower(guess)) {
+                guessedWord[i] = secretWord[i];
+                found = true;
+            }
+        }
+
+        if (!found) {
+            wrongGuesses.push_back(guess);
+            attempts++;
+            cout << "Wrong guess!" << endl;
+        } else {
+            cout << "Correct guess!" << endl;
+        }
+    }
+
+    if (guessedWord == secretWord) {
+        cout << "\n🎉 Congratulations! You guessed the word: " << secretWord << endl;
+    } else {
+        cout << "\n😢 Game Over! The correct word was: " << secretWord << endl;
+    }
+
+    return 0;
+}
